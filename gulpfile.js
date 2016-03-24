@@ -37,7 +37,7 @@ gulp.task('img', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src(['node_modules/govlab-styleguide/js/**/*', 'source/js/**/*'])
+  return gulp.src(['node_modules/govlab-styleguide/js/**/*', 'source/js/**/*']) // this is weird
   .pipe(plumber())
   .pipe(gulp.dest('public/js'))
   .pipe(browserSync.stream());
