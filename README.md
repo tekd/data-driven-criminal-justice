@@ -20,3 +20,11 @@ starting a list of desired tasks to have on the gulp static tools. Comments and 
 - Image Optimization
 - JS Lint, concatenation and minification
 - Deploy Command (GH-pages or AWS)
+
+
+### Other Important Workflow Details
+- setup a .gitignore and .gitconfig
+
+
+
+
