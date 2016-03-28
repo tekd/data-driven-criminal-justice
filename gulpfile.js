@@ -23,21 +23,27 @@ var cliOptions = {
   verbose   : false || argv.verbose
 };
 
-var options = {
-  path: './source/templates/', // base path to templates
-  ext: '.html', // extension to use for templates
-  generatedPath: '', // relative path to use for generated templates within base path
-  generatedTemplate: './source/templates/_template.html' // source template to use for generated templates
-};
-
 function slugify(t) {
-  return t.toString().toLowerCase()
+  return t ? t.toString().toLowerCase()
   .replace(/\s+/g, '-')
   .replace(/[^\w\-]+/g, '')
   .replace(/\-\-+/g, '-')
   .replace(/^-+/, '')
-  .replace(/-+$/, '');
+  .replace(/-+$/, '')
+  : false ;
 }
+
+function nunjucksEnv(env) {
+  env.addFilter('slug', slugify);
+}
+
+var options = {
+  path: './source/templates/', // base path to templates
+  ext: '.html', // extension to use for templates
+  generatedPath: '', // relative path to use for generated templates within base path
+  generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
+  manageEnv: nunjucksEnv // function to manage nunjucks environment
+};
 
 function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
   var templatefile = fs.readFileSync(templatePath);
