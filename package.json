@@ -1,5 +1,5 @@
 {
-  "name": "mrfp",
+  "name": "gulp-static-tools",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,5 +19,13 @@
     "gulp-sass": "^2.2.0",
     "gulp-shell": "^0.5.2",
     "nunjucks": "^2.3.0"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "event-stream": "^3.3.2",
+    "fs": "0.0.2",
+    "gulp": "^3.9.1",
+    "minimist": "^1.2.0",
+    "vinyl": "^1.1.1"
   }
 }
