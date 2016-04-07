@@ -1,5 +1,9 @@
 # gulp-static-tools
 
+### NOTE
+
+**When cloning this repo, please remove `public/` from `.gitignore` in order to use this as a scaffold.**
+
 starting a list of desired tasks to have on the gulp static tools. Comments and feedaback, very welcome.
 
 ### Dev Tasks
