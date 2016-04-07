@@ -1,3 +1,5 @@
+<!-- example based template -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,23 +13,23 @@
 
     <!-- Pulls the material design icon font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
     <!-- Pulls Slick CSS for sliders -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-    
+
     <!-- Pulls the main styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body id="">
 
 <header class="b-top-nav">
-        
+
     <div class="e-nav-group m-left">
         <span class="e-nav-item js-nav-trigger e-nav-trigger">
             <i class="material-icons">menu</i>
         </span>
     </div>
-    
+
     <div class="e-nav-group m-right e-social-media">
         <!-- Still questioning the relevance of this -->
         <a href="https://twitter.com/TheGovLab" class="e-nav-item" target="_blank">Twitter</a>
@@ -42,11 +44,11 @@
     <nav class="b-main-menu">
         <a href="./">Home</a>
     </nav>
-    
+
     <main role="main">
         {% block main %}{% endblock %}
     </main>
-    
+
     <footer class='b-footer'>
         <div class="row">
             <div class="large-4 column">
@@ -63,7 +65,7 @@
             </div>
         </div>
     </footer>
-    
+
     <div class="b-copyright">
         <div class="row">
             <div class="large-10 large-centered columns">
@@ -81,4 +83,3 @@
 
 </body>
 </html>
-
