@@ -223,7 +223,7 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
 
 var buildTasks = ['sass', 'js', 'img', 'nunjucks', 'libCss'];
 gulp.task('build', buildTasks, function () {
-  util.log('Running build tasks: ', buildTasks, gutil.colors.magenta('****'));
+  util.log(util.colors.magenta('****'), 'Running build tasks:', buildTasks, util.colors.magenta('****'));
 })
 
 gulp.task('deploy', ['build'], shell.task([
