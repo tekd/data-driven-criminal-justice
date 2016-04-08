@@ -5,24 +5,43 @@ sass            = require('gulp-sass'),
 shell           = require('gulp-shell'),
 data            = require('gulp-data'),
 nunjucksRender  = require('gulp-nunjucks-render'),
-browserSync     = require('browser-sync'),
+bs              = require('browser-sync').create(),
 plumber         = require('gulp-plumber'),
 colors          = require('colors'),
 minimist        = require('minimist'),
 File            = require('vinyl'),
 es              = require('event-stream'),
 fs              = require('fs'),
-// data for automatically generated templates
-generatedData   = require('./source/data/data.json').data,
-// default data to use if no automatically generated template is found
-defaultData     = require('./source/data/default.json').data,
-packagejson     = require('./package.json');
+generatedData   = require('./source/data/data.json').data, // data for automatically generated templates
+defaultData     = require('./source/data/default.json').data, // default data to use if no automatically generated template is found
+packagejson     = require('./package.json')
+;
+
+// define options & configuration ///////////////////////////////////
 
 var argv = minimist(process.argv.slice(2));
 
 var cliOptions = {
-  verbose   : false || argv.verbose
+  verbose   : false || argv.verbose,
+  nosync    : false || argv.nosync
 };
+
+var options = {
+  path: './source/templates/', // base path to templates
+  ext: '.html', // extension to use for templates
+  generatedPath: '', // relative path to use for generated templates within base path
+  generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
+  manageEnv: nunjucksEnv // function to manage nunjucks environment
+};
+
+gulp.task('bs', function() {
+  bs.init({
+    server: 'public',
+    open: false
+  });
+});
+
+// define custom functions ///////////////////////////////////
 
 function slugify(t) {
   return t ? t.toString().toLowerCase()
@@ -37,14 +56,6 @@ function slugify(t) {
 function nunjucksEnv(env) {
   env.addFilter('slug', slugify);
 }
-
-var options = {
-  path: './source/templates/', // base path to templates
-  ext: '.html', // extension to use for templates
-  generatedPath: '', // relative path to use for generated templates within base path
-  generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
-  manageEnv: nunjucksEnv // function to manage nunjucks environment
-};
 
 function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
   var templatefile = fs.readFileSync(templatePath);
@@ -71,20 +82,13 @@ function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
   return require('stream').Readable({ objectMode: true }).wrap(es.readArray(files));
 }
 
-gulp.task('browserSync', function() {
-  browserSync({
-    server: {
-      baseDir: 'public' // This is the DIST folder browsersync will serve
-    },
-    open: false
-  })
-})
+// define gulp tasks ///////////////////////////////////
 
 gulp.task('sass', function() {
   return gulp.src('source/sass/**/*.scss') // Gets all files ending with .scss in source/sass
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('public/css'))
-  .pipe(browserSync.reload({
+  .pipe(bs.reload({
     stream: true
   }))
 });
@@ -93,14 +97,14 @@ gulp.task('img', function() {
   return gulp.src('source/img/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/img'))
-  .pipe(browserSync.stream());
+  .pipe(bs.stream());
 });
 
 gulp.task('js', function() {
   return gulp.src(['node_modules/govlab-styleguide/js/**/*', 'source/js/**/*']) // this is weird
   .pipe(plumber())
   .pipe(gulp.dest('public/js'))
-  .pipe(browserSync.stream());
+  .pipe(bs.stream());
 });
 
 gulp.task('generateTemplates', function() {
@@ -135,7 +139,7 @@ gulp.task('deploy', ['sass', 'nunjucks', 'js', 'img'], shell.task([
   ])
 );
 
-gulp.task('default', ['browserSync', 'sass', 'nunjucks', 'js', 'img'], function (){
+gulp.task('default', ['bs', 'sass', 'nunjucks', 'js', 'img'], function (){
   gulp.watch('source/sass/**/*.scss', ['sass']);
   gulp.watch('source/templates/**/*.html', ['nunjucks']);
   gulp.watch('source/img/**/*', ['img']);
