@@ -1,5 +1,6 @@
 var
 gulp            = require('gulp'),
+util            = require('gulp-util'),
 sass            = require('gulp-sass'),
 shell           = require('gulp-shell'),
 data            = require('gulp-data'),
