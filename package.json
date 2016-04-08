@@ -16,6 +16,7 @@
     "gulp": "^3.9.1",
     "gulp-data": "^1.2.1",
     "gulp-flatten": "^0.2.0",
+    "gulp-intercept": "^0.1.0",
     "gulp-nunjucks-render": "^2.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.2.0",

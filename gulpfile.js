@@ -8,6 +8,7 @@ nunjucksRender  = require('gulp-nunjucks-render'),
 plumber         = require('gulp-plumber'),
 yaml            = require('gulp-yaml'),
 flatten         = require('gulp-flatten'),
+intercept       = require('gulp-intercept'),
 bs              = require('browser-sync').create(),
 minimist        = require('minimist'),
 File            = require('vinyl'),
@@ -35,7 +36,7 @@ var options = {
   dataExt: '.json', // extension to use for data
   manageEnv: nunjucksEnv, // function to manage nunjucks environment
   libraryPath: 'node_modules/govlab-styleguide/dist/', // path to installed sass/js library distro folder
-  defaultData: require('./source/data/default.json').data // default dataset to use if no automatically generated template is found
+  defaultData: './source/data/default.json' // default dataset to use if no automatically generated template is found
 };
 
 // initialize browsersync
@@ -169,6 +170,27 @@ gulp.task('img', function() {
   .pipe(nosync ? bs.stream() : util.noop());
 });
 
+gulp.task('yaml', function () {
+  return gulp.src('source/data/**/*.+(yaml|yml)')
+  .pipe(yaml())
+  .pipe(gulp.dest('source/data'));
+});
+
+gulp.task('json', ['yaml'], function () {
+  return gulp.src('source/data/**/*.json')
+  .pipe(intercept(function(file){
+    var o = JSON.parse(file.contents.toString()),
+    b = {};
+    b['data'] = o;
+    if (cliOptions.verbose) {
+      util.log(util.colors.magenta('Converting yaml ' + file.path), 'to json as', util.colors.blue(JSON.stringify(b)));
+    }
+    file.contents = new Buffer ( JSON.stringify(b) );
+    return file;
+  }))
+  .pipe(gulp.dest('source/data'));
+});
+
 gulp.task('generateTemplates', function() {
   return generateVinyl(options.path, options.dataPath)
   .pipe(gulp.dest(options.path))
@@ -192,7 +214,7 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
       }
     }
     // if no id is found, return a default dataset
-    return options.defaultData;
+    return require(options.defaultData).data;
   }))
   .pipe(nunjucksRender(options))
   .pipe(flatten())
