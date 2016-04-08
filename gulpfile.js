@@ -7,6 +7,7 @@ data            = require('gulp-data'),
 nunjucksRender  = require('gulp-nunjucks-render'),
 plumber         = require('gulp-plumber'),
 yaml            = require('gulp-yaml'),
+flatten         = require('gulp-flatten'),
 bs              = require('browser-sync').create(),
 minimist        = require('minimist'),
 File            = require('vinyl'),
@@ -194,6 +195,7 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
     return options.defaultData;
   }))
   .pipe(nunjucksRender(options))
+  .pipe(flatten())
   .pipe(gulp.dest('public'));
 });
 
