@@ -29,9 +29,9 @@ var cliOptions = {
 // gulpfile options
 var options = {
   path: './source/templates/', // base path to templates
+  dataPath: './source/data/', // base path to datasets
   ext: '.html', // extension to use for templates
-  generatedPath: '', // relative path to use for generated templates within base path
-  generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
+  dataExt: '.json', // extension to use for data
   manageEnv: nunjucksEnv, // function to manage nunjucks environment
   libraryPath: 'node_modules/govlab-styleguide/dist/', // path to installed sass/js library distro folder
   defaultData: require('./source/data/default.json').data // default dataset to use if no automatically generated template is found
@@ -68,28 +68,60 @@ function nunjucksEnv(env) {
 // generate a stream of one or more vinyl files from a json data source
 // containing the parent template specified by templatePath
 // which can then be piped into nunjucks to create output with data scoped to the datum
-function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
-  var templatefile = fs.readFileSync(templatePath);
-  var files = [];
+function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
+  var files = [], r, r2, f, baseTemplate, baseName, _data
+  base = fs.readdirSync(basePath),
+  dataDir = fs.readdirSync(dataPath)
+  ;
+  // stupid code courtesy of node doesnt support default parameters as of v5
+  fPrefix = fPrefix === undefined ? '' : fPrefix;
+  fSuffix = fSuffix === undefined ? options.ext : fSuffix;
+  dSuffix = dSuffix === undefined ? options.dataExt : dSuffix;
 
-  if (filePrefix === undefined) {
-    filePrefix = '';
+  for (var template in base) {
+    // match a filename starting with '__' and ending with the file suffix
+    r = new RegExp('^__[^.]*\\' + fSuffix + '$');
+    if (r.test(base[template])) {
+      // read the file in as our base template
+      baseTemplate = fs.readFileSync(basePath + base[template]);
+
+      // strip __ and extension to get base naming convention
+      baseName = base[template]
+      .replace(/^__/, '')
+      .replace(new RegExp('\\' + fSuffix + '$'), '')
+      ;
+
+      // create a new dir for the output if it doesn't already exist
+      // based on naming convention
+
+      if (!fs.existsSync(basePath + baseName)){
+        fs.mkdirSync(basePath + baseName);
+      }
+
+      // look for a data file matching the naming convention
+      r2 = new RegExp(baseName + '\\' + dSuffix + '$');
+      for (var dataset in dataDir) {
+        if (r2.test(dataDir[dataset])) {
+
+          // convert file to object
+          _data = require(dataPath + dataDir[dataset]).data;
+
+          // create a new vinyl file for each datum in _data and push to files
+          // using directory based on naming convention and base template as content
+          for (var d in _data) {
+            f = new File({
+              base: basePath,
+              path: basePath + baseName + '/' + fPrefix + _data[d].id + '-' + slugify(_data[d].title) + fSuffix,
+              contents: baseTemplate
+            });
+            files.push(f);
+          }
+        }
+      }
+    }
   }
 
-  if (fileSuffix === undefined) {
-    fileSuffix = options.ext;
-  }
-
-  for (d in _data) {
-    var f = new File({
-      cwd: '.',
-      base: basePath,
-      path: basePath + filePrefix + _data[d].id + '-' + slugify(_data[d].title) + fileSuffix,
-      contents: templatefile
-    });
-    files.push(f);
-  }
-
+  // convert files array to stream and return
   return require('stream').Readable({ objectMode: true }).wrap(es.readArray(files));
 }
 
@@ -130,8 +162,8 @@ gulp.task('img', function() {
 });
 
 gulp.task('generateTemplates', function() {
-  return generateVinyl(generatedData, options.path + options.generatedPath, options.generatedTemplate)
-  .pipe(gulp.dest(options.path + options.generatedPath))
+  return generateVinyl(options.path, options.dataPath)
+  .pipe(gulp.dest(options.path))
 });
 
 gulp.task('nunjucks', ['generateTemplates'], function() {
@@ -143,7 +175,7 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
       // filename must contain a unique id field which must also be present in the data
       if (file.path.indexOf(generatedData[i].id) >= 0) {
         if (cliOptions.verbose) {
-          console.log('Found Generated Template',  file.path, ': using ', JSON.stringify(generatedData[i]).green);
+          util.log( gutil.colors.green('Found Generated Template' + file.path), ' : using ' + JSON.stringify(generatedData[i]) );
         }
         // use the data matching id of the file
         return generatedData[i];
