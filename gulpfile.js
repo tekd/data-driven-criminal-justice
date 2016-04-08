@@ -41,7 +41,7 @@ var options = {
 
 // initialize browsersync
 gulp.task('bs', function() {
-  if (!nosync) {
+  if (!cliOptions.nosync) {
     bs.init({
       server: 'public',
       open: false
@@ -140,7 +140,7 @@ gulp.task('sass', function() {
   return gulp.src('source/sass/styles.scss')
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('public/css'))
-  .pipe(nosync ? bs.stream() : util.noop());
+  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('libCss', function() {
@@ -160,14 +160,14 @@ gulp.task('js', ['libJs'], function() {
   return gulp.src('source/js/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/js'))
-  .pipe(nosync ? bs.stream() : util.noop());
+  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('img', function() {
   return gulp.src('source/img/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/img'))
-  .pipe(nosync ? bs.stream() : util.noop());
+  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('yaml', function () {
