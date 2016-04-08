@@ -35,10 +35,12 @@ var options = {
 };
 
 gulp.task('bs', function() {
-  bs.init({
-    server: 'public',
-    open: false
-  });
+  if (!nosync) {
+    bs.init({
+      server: 'public',
+      open: false
+    });
+  }
 });
 
 // define custom functions ///////////////////////////////////
@@ -88,23 +90,21 @@ gulp.task('sass', function() {
   return gulp.src('source/sass/**/*.scss') // Gets all files ending with .scss in source/sass
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('public/css'))
-  .pipe(bs.reload({
-    stream: true
-  }))
+  .pipe(nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('img', function() {
   return gulp.src('source/img/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/img'))
-  .pipe(bs.stream());
+  .pipe(nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('js', function() {
   return gulp.src(['node_modules/govlab-styleguide/js/**/*', 'source/js/**/*']) // this is weird
   .pipe(plumber())
   .pipe(gulp.dest('public/js'))
-  .pipe(bs.stream());
+  .pipe(nosync ? bs.stream() : util.noop());
 });
 
 gulp.task('generateTemplates', function() {
