@@ -12,7 +12,6 @@ minimist        = require('minimist'),
 File            = require('vinyl'),
 es              = require('event-stream'),
 fs              = require('fs'),
-generatedData   = require('./source/data/data.json').data, // data for automatically generated templates
 defaultData     = require('./source/data/default.json').data, // default data to use if no automatically generated template is found
 packagejson     = require('./package.json')
 ;
@@ -32,6 +31,7 @@ var options = {
   generatedPath: '', // relative path to use for generated templates within base path
   generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
   manageEnv: nunjucksEnv // function to manage nunjucks environment
+  libraryPath: 'node_modules/govlab-styleguide/dist/' // path to installed sass/js library distro folder
 };
 
 gulp.task('bs', function() {
@@ -87,9 +87,29 @@ function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
 // define gulp tasks ///////////////////////////////////
 
 gulp.task('sass', function() {
-  return gulp.src('source/sass/**/*.scss') // Gets all files ending with .scss in source/sass
+  return gulp.src('source/sass/styles.scss')
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('public/css'))
+  .pipe(nosync ? bs.stream() : util.noop());
+});
+
+gulp.task('libCss', function() {
+  return gulp.src(options.libraryPath + 'css/**/*')
+  .pipe(plumber())
+  .pipe(gulp.dest('source/css/lib'))
+  .pipe(gulp.dest('public/css/lib'));
+});
+
+gulp.task('libJs', function() {
+  return gulp.src(options.libraryPath + 'js/**/*')
+  .pipe(plumber())
+  .pipe(gulp.dest('source/js/lib'));
+});
+
+gulp.task('js', ['libJs'], function() {
+  return gulp.src('source/js/**/*')
+  .pipe(plumber())
+  .pipe(gulp.dest('public/js'))
   .pipe(nosync ? bs.stream() : util.noop());
 });
 
@@ -97,13 +117,6 @@ gulp.task('img', function() {
   return gulp.src('source/img/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/img'))
-  .pipe(nosync ? bs.stream() : util.noop());
-});
-
-gulp.task('js', function() {
-  return gulp.src(['node_modules/govlab-styleguide/js/**/*', 'source/js/**/*']) // this is weird
-  .pipe(plumber())
-  .pipe(gulp.dest('public/js'))
   .pipe(nosync ? bs.stream() : util.noop());
 });
 
@@ -134,12 +147,17 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
   .pipe(gulp.dest('public'));
 });
 
-gulp.task('deploy', ['sass', 'nunjucks', 'js', 'img'], shell.task([
+var buildTasks = ['sass', 'js', 'img', 'nunjucks', 'libCss'];
+gulp.task('build', buildTasks, function () {
+  util.log('Running build tasks: ', buildTasks, gutil.colors.magenta('****'));
+})
+
+gulp.task('deploy', ['build'], shell.task([
   'git subtree push --prefix public origin gh-pages'
   ])
 );
 
-gulp.task('default', ['bs', 'sass', 'nunjucks', 'js', 'img'], function (){
+gulp.task('default', ['bs', 'build'], function (){
   gulp.watch('source/sass/**/*.scss', ['sass']);
   gulp.watch('source/templates/**/*.html', ['nunjucks']);
   gulp.watch('source/img/**/*', ['img']);
