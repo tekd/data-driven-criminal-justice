@@ -20,7 +20,7 @@
     "gulp-sass": "^2.2.0",
     "gulp-shell": "^0.5.2",
     "event-stream": "^3.3.2",
-    "fs": "0.0.2",
+    "fs": "^0.0.2",
     "minimist": "^1.2.0",
     "vinyl": "^1.1.1"
   }
