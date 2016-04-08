@@ -191,7 +191,7 @@ gulp.task('json', ['yaml'], function () {
   .pipe(gulp.dest('source/data'));
 });
 
-gulp.task('generateTemplates', function() {
+gulp.task('generateTemplates', ['json'], function() {
   return generateVinyl(options.path, options.dataPath)
   .pipe(gulp.dest(options.path))
 });
