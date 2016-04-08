@@ -11,28 +11,32 @@ minimist        = require('minimist'),
 File            = require('vinyl'),
 es              = require('event-stream'),
 fs              = require('fs'),
-defaultData     = require('./source/data/default.json').data, // default data to use if no automatically generated template is found
 packagejson     = require('./package.json')
 ;
 
 // define options & configuration ///////////////////////////////////
 
+// get arguments from command line
 var argv = minimist(process.argv.slice(2));
 
+// command line options (usage: gulp --optionname)
 var cliOptions = {
   verbose   : false || argv.verbose,
   nosync    : false || argv.nosync
 };
 
+// gulpfile options
 var options = {
   path: './source/templates/', // base path to templates
   ext: '.html', // extension to use for templates
   generatedPath: '', // relative path to use for generated templates within base path
   generatedTemplate: './source/templates/_template.html', // source template to use for generated templates
-  manageEnv: nunjucksEnv // function to manage nunjucks environment
-  libraryPath: 'node_modules/govlab-styleguide/dist/' // path to installed sass/js library distro folder
+  manageEnv: nunjucksEnv, // function to manage nunjucks environment
+  libraryPath: 'node_modules/govlab-styleguide/dist/', // path to installed sass/js library distro folder
+  defaultData: require('./source/data/default.json').data // default dataset to use if no automatically generated template is found
 };
 
+// initialize browsersync
 gulp.task('bs', function() {
   if (!nosync) {
     bs.init({
@@ -44,6 +48,7 @@ gulp.task('bs', function() {
 
 // define custom functions ///////////////////////////////////
 
+// converts string t to a slug (eg 'Some Text Here' becomes 'some-text-here')
 function slugify(t) {
   return t ? t.toString().toLowerCase()
   .replace(/\s+/g, '-')
@@ -54,10 +59,14 @@ function slugify(t) {
   : false ;
 }
 
+// set up nunjucks environment
 function nunjucksEnv(env) {
   env.addFilter('slug', slugify);
 }
 
+// generate a stream of one or more vinyl files from a json data source
+// containing the parent template specified by templatePath
+// which can then be piped into nunjucks to create output with data scoped to the datum
 function generateVinyl(_data, basePath, templatePath, filePrefix, fileSuffix) {
   var templatefile = fs.readFileSync(templatePath);
   var files = [];
@@ -140,7 +149,7 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
       }
     }
     // if no id is found, return a default dataset
-    return defaultData;
+    return options.defaultData;
   }))
   .pipe(nunjucksRender(options))
   .pipe(gulp.dest('public'));
