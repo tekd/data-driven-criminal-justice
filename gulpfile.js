@@ -65,6 +65,10 @@ function nunjucksEnv(env) {
   env.addFilter('slug', slugify);
 }
 
+// object to compile all the generated datasets into a composite set
+// for injection into nunjucks using gulp-data
+var generatedData = {};
+
 // generate a stream of one or more vinyl files from a json data source
 // containing the parent template specified by templatePath
 // which can then be piped into nunjucks to create output with data scoped to the datum
@@ -103,8 +107,11 @@ function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
       for (var dataset in dataDir) {
         if (r2.test(dataDir[dataset])) {
 
-          // convert file to object
+          // convert file data to object
           _data = require(dataPath + dataDir[dataset]).data;
+
+          // add data to composite set
+          generatedData[baseName] = _data;
 
           // create a new vinyl file for each datum in _data and push to files
           // using directory based on naming convention and base template as content
@@ -170,15 +177,17 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
   return gulp.src( options.path + '**/*' + options.ext )
   .pipe(plumber())
   .pipe(data(function(file) {
-    for (var i in generatedData) {
-      // check if the file is an auto generated file
-      // filename must contain a unique id field which must also be present in the data
-      if (file.path.indexOf(generatedData[i].id) >= 0) {
-        if (cliOptions.verbose) {
-          util.log( gutil.colors.green('Found Generated Template' + file.path), ' : using ' + JSON.stringify(generatedData[i]) );
+    // check if the file is an auto generated file
+    // filename must contain a unique id which must also be present in the data as 'id'
+    for (var datasetName in generatedData) {
+      for (var i in generatedData[datasetName]) {
+        if (file.path.indexOf(generatedData[datasetName][i].id) >= 0) {
+          if (cliOptions.verbose) {
+            util.log(util.colors.green('Found Generated Template ' + file.path), ': using', JSON.stringify(generatedData[datasetName][i]));
+          }
+          // return data matching id in dataset datasetName
+          return generatedData[datasetName][i];
         }
-        // use the data matching id of the file
-        return generatedData[i];
       }
     }
     // if no id is found, return a default dataset
