@@ -1,15 +1,1 @@
-{
-    "data": [
-    {
-        "id" : "a908fhq0923hfb",
-        "title" : "Test datum",
-        "example" : "value"
-    }
-    ,
-    {
-        "id" : "3f9823f09ahfh9",
-        "title" : "Bear datum",
-        "example" : "you wouldnt download a bear"
-    }
-    ]
-}
+{"data":[{"id":"09r09090e9f09","title":"bear magic","example":"value"},{"id":"fdsjiafwefj0e","title":"Ultimate Bear Car","example":"you wouldnt download a bear"}]}
