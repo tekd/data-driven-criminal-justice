@@ -138,13 +138,10 @@ function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
             if (_data[d].hasOwnProperty('title')) {
               // name file if title exists
               fname = '-' + slugify(_data[d].title);
-              console.log ('HI', fname);
             } else {
               // otherwise just use id
               fname = '';
-              console.log ('FU', fname);
             }
-              console.log ('MI', fname);
             f = new File({
               base: basePath,
               path: basePath + baseName + '/' + fPrefix + _data[d].id + fname + fSuffix,
@@ -244,7 +241,8 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
     // filename must contain a unique id which must also be present in the data as 'id'
     for (var datasetName in generatedData) {
       for (var i in generatedData[datasetName]) {
-        if (file.path.indexOf(generatedData[datasetName][i].id) >= 0) {
+        var r = new RegExp(datasetName + '\\/' + generatedData[datasetName][i].id)
+        if (r.test(file.path)) {
           if (cliOptions.verbose) {
             util.log(util.colors.green('Found Generated Template ' + file.path), ': using', JSON.stringify(generatedData[datasetName][i]));
           }
