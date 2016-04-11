@@ -14,6 +14,7 @@ minimist        = require('minimist'),
 File            = require('vinyl'),
 es              = require('event-stream'),
 fs              = require('fs'),
+md5             = require('md5'),
 packagejson     = require('./package.json')
 ;
 
