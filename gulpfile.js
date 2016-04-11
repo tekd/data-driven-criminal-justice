@@ -67,22 +67,44 @@ function nunjucksEnv(env) {
   env.addFilter('slug', slugify);
 }
 
-// object to compile all the generated datasets into a composite set
+// compile all the datasets into a composite set
 // for injection into nunjucks using gulp-data
 var generatedData = {};
+
+function compileData(dataPath, ext) {
+  ext = ext === undefined ? options.dataExt : ext;
+  var dataDir = fs.readdirSync(dataPath),
+    baseName, r, _data;
+
+  // look for a data file matching the naming convention
+  r = new RegExp('\\' + ext + '$');
+  for (var dataset in dataDir) {
+    if (r.test(dataDir[dataset])) {
+
+      // trim basename
+      baseName = dataDir[dataset].replace(new RegExp('\\' + ext + '$'), '');
+
+      // add JSON to object
+      _data = require(dataPath + dataDir[dataset]).data;
+      generatedData[baseName] = _data;
+    }
+  }
+}
 
 // generate a stream of one or more vinyl files from a json data source
 // containing the parent template specified by templatePath
 // which can then be piped into nunjucks to create output with data scoped to the datum
 function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
-  var files = [], r, r2, f, baseTemplate, baseName, _data
-  base = fs.readdirSync(basePath),
-  dataDir = fs.readdirSync(dataPath)
-  ;
+  var files = [], r, r2, f, baseTemplate, baseName, _data,
+  base = fs.readdirSync(basePath);
+
   // stupid code courtesy of node doesnt support default parameters as of v5
   fPrefix = fPrefix === undefined ? '' : fPrefix;
   fSuffix = fSuffix === undefined ? options.ext : fSuffix;
   dSuffix = dSuffix === undefined ? options.dataExt : dSuffix;
+
+  // compile datasets
+  compileData(dataPath, dSuffix);
 
   for (var template in base) {
     // match a filename starting with '__' and ending with the file suffix
@@ -99,21 +121,15 @@ function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
 
       // create a new dir for the output if it doesn't already exist
       // based on naming convention
-
       if (!fs.existsSync(basePath + baseName)){
         fs.mkdirSync(basePath + baseName);
       }
 
-      // look for a data file matching the naming convention
-      r2 = new RegExp(baseName + '\\' + dSuffix + '$');
-      for (var dataset in dataDir) {
-        if (r2.test(dataDir[dataset])) {
+      // look for a dataset matching the naming convention
+      for (var dataset in generatedData) {
+        if (dataset === baseName) {
 
-          // convert file data to object
-          _data = require(dataPath + dataDir[dataset]).data;
-
-          // add data to composite set
-          generatedData[baseName] = _data;
+          _data = generatedData[dataset];
 
           // create a new vinyl file for each datum in _data and push to files
           // using directory based on naming convention and base template as content
@@ -213,8 +229,9 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
         }
       }
     }
-    // if no id is found, return a default dataset
-    return require(options.defaultData).data;
+    // if no id is found, return the whole data cache
+    // this will then be available in nunjucks as [jsonfilename].[key].[etc]
+    return generatedData;
   }))
   .pipe(nunjucksRender(options))
   .pipe(flatten())
