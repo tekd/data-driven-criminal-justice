@@ -75,7 +75,7 @@ var generatedData = {};
 function compileData(dataPath, ext) {
   ext = ext === undefined ? options.dataExt : ext;
   var dataDir = fs.readdirSync(dataPath),
-    baseName, r, _data;
+  baseName, r, _data;
 
   // look for a data file matching the naming convention
   r = new RegExp('\\' + ext + '$');
@@ -96,7 +96,7 @@ function compileData(dataPath, ext) {
 // containing the parent template specified by templatePath
 // which can then be piped into nunjucks to create output with data scoped to the datum
 function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
-  var files = [], r, r2, f, baseTemplate, baseName, _data,
+  var files = [], r, r2, f, baseTemplate, baseName, _data, fname,
   base = fs.readdirSync(basePath);
 
   // stupid code courtesy of node doesnt support default parameters as of v5
@@ -135,9 +135,19 @@ function generateVinyl(basePath, dataPath, fPrefix, fSuffix, dSuffix) {
           // create a new vinyl file for each datum in _data and push to files
           // using directory based on naming convention and base template as content
           for (var d in _data) {
+            if (_data[d].hasOwnProperty('title')) {
+              // name file if title exists
+              fname = '-' + slugify(_data[d].title);
+              console.log ('HI', fname);
+            } else {
+              // otherwise just use id
+              fname = '';
+              console.log ('FU', fname);
+            }
+              console.log ('MI', fname);
             f = new File({
               base: basePath,
-              path: basePath + baseName + '/' + fPrefix + _data[d].id + '-' + slugify(_data[d].title) + fSuffix,
+              path: basePath + baseName + '/' + fPrefix + _data[d].id + fname + fSuffix,
               contents: baseTemplate
             });
             files.push(f);
@@ -196,9 +206,22 @@ gulp.task('yaml', function () {
 gulp.task('json', ['yaml'], function () {
   return gulp.src('source/data/**/*.json')
   .pipe(intercept(function(file){
+    // wrap json in a top level property 'data'
     var o = JSON.parse(file.contents.toString()),
     b = {};
-    b['data'] = o;
+    b.data = o;
+    // assign a unique id to each entry in data
+    for (var j in b.data) {
+      if (!b.data[j].hasOwnProperty('id')) {
+        if (b.data[j].hasOwnProperty('title')) {
+          // use title to create hash if exists,
+          b.data[j].id = md5(b.data[j].title);
+          // otherwise use first prop
+        } else {
+          b.data[j].id = md5(b.data[j][Object.keys(b.data[j])[0]]);
+        }
+      }
+    }
     if (cliOptions.verbose) {
       util.log(util.colors.magenta('Converting yaml ' + file.path), 'to json as', util.colors.blue(JSON.stringify(b)));
     }
