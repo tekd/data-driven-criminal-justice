@@ -202,10 +202,10 @@ gulp.task('yaml', function () {
 
 gulp.task('json', ['yaml'], function() {
   return gulp.src('source/data/**/*.json')
-    .pipe(intercept(function(file) {
-      var o = JSON.parse(file.contents.toString()),
-        b = {};
-      if (!o.hasOwnProperty('data')) {
+  .pipe(intercept(function(file) {
+    var o = JSON.parse(file.contents.toString()),
+    b = {};
+    if (!o.hasOwnProperty('data')) {
         // wrap json in a top level property 'data'
         b.data = o;
         // assign a unique id to each entry in data
@@ -227,7 +227,7 @@ gulp.task('json', ['yaml'], function() {
       }
       return file;
     }))
-    .pipe(gulp.dest('source/data'));
+  .pipe(gulp.dest('source/data'));
 });
 
 gulp.task('generateTemplates', ['json'], function() {
@@ -249,7 +249,10 @@ gulp.task('nunjucks', ['generateTemplates'], function() {
             util.log(util.colors.green('Found Generated Template ' + file.path), ': using', JSON.stringify(generatedData[datasetName][i]));
           }
           // return data matching id in dataset datasetName
-          return generatedData[datasetName][i];
+          var d = generatedData[datasetName][i];
+          // add all datasets as special prop $global
+          d.$global = generatedData;
+          return d;
         }
       }
     }
