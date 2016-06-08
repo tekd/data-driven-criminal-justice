@@ -68,6 +68,14 @@ function nunjucksEnv(env) {
   env.addFilter('slug', slugify);
 }
 
+
+
+// errorhandler function
+function onError(err) {
+  var errorlog = util.colors.bold.red(err.name + "\n" + err.message)  + util.colors.red("\n" + err.fileName + "\n");
+  console.log(errorlog);
+}
+
 // compile all the datasets into a composite set
 // for injection into nunjucks using gulp-data
 var generatedData = {};
@@ -237,7 +245,9 @@ gulp.task('generateTemplates', ['json'], function() {
 
 gulp.task('nunjucks', ['generateTemplates'], function() {
   return gulp.src( options.path + '**/*' + options.ext )
-  .pipe(plumber())
+  .pipe(plumber({
+    errorHandler: onError
+  }))
   .pipe(data(function(file) {
     // check if the file is an auto generated file
     // filename must contain a unique id which must also be present in the data as 'id'
