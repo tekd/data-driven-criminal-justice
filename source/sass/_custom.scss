@@ -1,3 +1,26 @@
 // example custom sass file
 // place site specific sass into individual files like this one as needed for the design,
 // and @import in styles.scss
+
+// FOOTER
+.b-footer .e-content {
+
+    h4 {
+        @include breakpoint($mobile-only) { 
+          text-align: center; 
+        }
+    }
+
+    .e-partner-logo {
+        text-align: center;
+    }
+    .e-partner-logo > img {
+
+        @include breakpoint($mobile-only) {
+            width: 80%;
+            max-height: 300px;
+        }
+
+        width: 40%;
+    }
+}
