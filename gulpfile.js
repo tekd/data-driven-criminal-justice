@@ -172,7 +172,7 @@ gulp.task('sass', function() {
   return gulp.src('source/sass/styles.scss')
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('public/css'))
-  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
+  .pipe(bs.stream());
 });
 
 gulp.task('libCss', function() {
@@ -192,14 +192,14 @@ gulp.task('js', ['libJs'], function() {
   return gulp.src('source/js/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/js'))
-  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
+  .pipe(bs.stream());
 });
 
 gulp.task('img', function() {
   return gulp.src('source/img/**/*')
   .pipe(plumber())
   .pipe(gulp.dest('public/img'))
-  .pipe(cliOptions.nosync ? bs.stream() : util.noop());
+  .pipe(bs.stream());
 });
 
 gulp.task('yaml', function () {
@@ -284,6 +284,30 @@ gulp.task('deploy', ['build'], shell.task([
   'git subtree push --prefix public origin gh-pages'
   ])
 );
+
+
+
+// Nunjucks design task without generating templates
+gulp.task('nunjucksDesign', function() {
+  return gulp.src( options.path + '**/*' + options.ext )
+  .pipe(plumber({
+    errorHandler: onError
+  }))
+  .pipe(nunjucksRender(options))
+  .pipe(gulp.dest('public'))
+  .pipe(bs.reload({
+    stream: true
+  }))
+});
+
+// Claudio's Design Task - won't work on generated pages
+gulp.task('design', ['bs', 'sass', 'nunjucksDesign', 'js', 'img'], function (){
+  gulp.watch('source/sass/**/*.scss', ['sass']);
+  gulp.watch('source/templates/**/*.html', ['nunjucksDesign']);
+  gulp.watch('source/img/**/*', ['img']);
+  gulp.watch('source/js/**/*', ['js']);
+});
+
 
 gulp.task('default', ['bs', 'build'], function (){
   gulp.watch('source/sass/**/*.scss', ['sass']);
