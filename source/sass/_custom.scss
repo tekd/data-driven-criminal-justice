@@ -23,11 +23,15 @@
     text-align: center;
   }
   .e-partner-logo > img {
-    @include breakpoint($mobile-only) {
-      width: 80%;
+    width: 25%;
+    @include breakpoint($desktop){
+      width: 25%;
       max-height: 300px;
     }
-    width: 25%;
+    @include breakpoint($mobile-only){
+      width: 200px;
+      max-height: 300px;
+    }
   }
 }
 
@@ -37,23 +41,6 @@
 #b-homepage {
   .b-top-section {
     background-image: url(/img/temp-backgrounds/temp1.jpeg);
-    background-size: cover;
-    height: 50vh;
-    position: relative;
-  }
-  .e-titles {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    padding: 20px;
-    }
-  h3 {
-    text-transform: uppercase;
-    font-size: 20px;
-    margin: 0;
-    width: auto;
-    padding: 5px 8px;
-    font-weight: 400;
   }
   h2 {
     font-size: 50px;
@@ -63,7 +50,7 @@
   }
   .b-description {
     font-weight: 300;
-    font-size: 24px;
+    font-size: 22px;
     margin-top: 5px;
   }
   i.m-xl-badge {
@@ -75,31 +62,50 @@
 
 }
 
-
-// SURVEYS
-.b-surveys-page{
-
+// INDEX AND SURVEYS
+.b-surveys-page,
+#b-homepage {
   .b-top-section {
     background-size: cover;
-    height: 50vh;
+    height: 72vh;
     position: relative;
+    .e-main-title {
+      @include breakpoint($desktop){
+        font-size: 60px;
+      }
+      @include breakpoint($mobile-only){
+        font-size: 50px;
+      }
+    }
+    .e-tagline {
+      @include breakpoint($desktop){
+        font-size: 28px;
+      }
+      @include breakpoint($mobile-only){
+        font-size: 20px;
+      }
+    }
   }
   .e-titles {
     position: absolute;
-    bottom: 20px;
+    bottom: 100px;
     width: 100%;
     padding: 20px;
     }
   h3 {
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 24px;
     margin: 0;
     width: auto;
     padding: 5px 8px;
-    font-weight: 400;
+    font-weight: 300;
   }
+}
+
+// SURVEYS
+.b-surveys-page{
   #download-button {
-    bottom: -45px;
+    bottom: -127px;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -115,19 +121,26 @@
     margin: 40px 0px;
     padding: 10px;
     .e-description-title {
-      font-weight: 600;
+      // font-weight: 600;
       color: rgba($black, .4);
-      margin-right: 30px;
+      // margin-right: 30px;
       line-height: .9;
       padding-left: 0;
-      text-align: right;
-      // @include breakpoint($mobile-only) {
-      //   text-align: left;
-      // }
+      text-transform: uppercase;
+          font-weight: 400;
+          font-size: 22px;
+      @include breakpoint($desktop){
+        text-align: right;
+      }
+      @include breakpoint($mobile-only){
+        text-align: left;
+      }
     }
     .e-description {
-      line-height: 1.6;
-      font-size: 18px;
+      // line-height: 1.4;
+      // font-size: 18px;
+      font-size: 1.2rem;
+      font-weight: 300;
     }
 
   }
