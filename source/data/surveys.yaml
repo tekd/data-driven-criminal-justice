@@ -2,7 +2,7 @@
 # surveys
 
 - title: The CJCC Survey
-  image: 
+  image: temp2.jpeg
   date_start: October 21, 2015
   date_end: October 24, 2015
   qty_responses: 34
@@ -12,12 +12,13 @@
     - Map the availability of and access to data for reform
     - Identify the barriers and impediments to using data
   key_findings: Initial results from 34 respondents demonstrated a diverse array of data practices. Information is collected on paper and digitally. Information is collected on paper and digitally. In some cases, it is anonymized and, in other cases, simply stored security. There’s a significant diversity around data analytics as well. Some analyze the data within the agency, some outsource, and some do not perform data analytics at all. Some jurisdictions can use data to trace someone in the system; others cannot. Governance policies and mechanisms differ. In short, there is diversity of experience. In common is only the fact that almost no one posts open data for the public, including researchers, to study and analyze. The results were presented during the first Data-Driven Justice Workshop held at the White House on October 28th, 2015.
+  is_active: false
   link:
     survey: https://govlab.typeform.com/to/qPeday
   downloads:
 
 - title: The Arnold Foundation Skills Survey
-  image: 
+  image: temp3.jpeg
   date_start: September 9, 2015
   date_end: October 21, 2015
   qty_responses: 63
@@ -27,12 +28,13 @@
     - Know how much practitioners know about innovation and human-centered design
     - Inform the design of training programs to accelerate data-driven criminal justice reform. 
   key_findings: The initial 57 responses showed disparate conceptual and practical skill level of criminal justice officials regarding the use of data. Designed to identify the barriers and limitations to data sharing and analysis, the survey revealed a deficit in the ability to use data that varies greatly across agencies.
+  is_active: false
   link:
     survey: https://the-govlab.forms.fm/data-driven-criminal-justice-training-survey
   downloads:
 
 - title: Empirical Criminal Justice Researcher Survey
-  image: 
+  image: temp4.jpeg
   date_start: 
   date_end:
   qty_responses: 
@@ -43,6 +45,7 @@
     - the impediments to access this data
     - how they would like to obtain the data
   key_findings: In process
+  is_active: true
   link:
     survey: https://nyu.qualtrics.com/jfe/form/SV_4MCNBPkJ7KVR3cp
   downloads:
