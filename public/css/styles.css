@@ -7567,6 +7567,26 @@ textarea {
   font: inherit;
   /* 2 */ }
 
+.m-ddcj-purple {
+  background-color: #68678f;
+  color: white; }
+
+.m-dark-teal {
+  background-color: #6291a3;
+  color: white; }
+
+.m-ddcj-blue {
+  background-color: #7298af;
+  color: white; }
+
+.m-dark-purple {
+  background-color: #656395;
+  color: white; }
+
+.m-teal {
+  background-color: #39dfc7;
+  color: white; }
+
 .b-top-nav.m-transparent {
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
