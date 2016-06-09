@@ -7597,8 +7597,6 @@ textarea {
       width: 25%;
       max-height: 300px; } }
 
-<<<<<<< HEAD
-=======
 #b-homepage .b-top-section {
   background-image: url(/img/banners/ddcj-index.jpg); }
   #b-homepage .b-top-section .e-shade {
@@ -7610,7 +7608,6 @@ textarea {
     right: 0;
     background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)); }
 
->>>>>>> db4bbbaee928985c21568173a3aa2cd1ead6b06a
 #b-homepage h2 {
   font-size: 50px;
   font-weight: 200;
