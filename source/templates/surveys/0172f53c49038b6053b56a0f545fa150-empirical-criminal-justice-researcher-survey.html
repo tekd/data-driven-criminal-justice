@@ -1,5 +1,15 @@
 {% extends '_base.html' %}
 
+{% block menu %}
+<nav class="b-main-menu">
+    <a href="./">Home</a>
+    {% for survey in $global.surveys %}
+        <a href="{{survey.id}}-{{survey.title | slug }}.html">{{survey.title}}</a>
+    {% endfor %}
+</nav>
+{% endblock %}
+
+
 {% block main %}
 <div class='b-surveys-page'>
 
