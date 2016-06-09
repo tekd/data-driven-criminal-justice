@@ -2,7 +2,7 @@
 // place site specific sass into individual files like this one as needed for the design,
 // and @import in styles.scss
 
-// FOOTER
+// BASE
 .b-footer .e-content {
 
     h4 {
@@ -24,3 +24,53 @@
         width: 40%;
     }
 }
+
+
+
+// INDEX
+#b-homepage {
+  .b-top-section {
+    background-image: url(/img/temp-backgrounds/temp1.jpeg);
+    background-size: cover;
+    height: 50vh;
+    position: relative;
+  }
+  .e-titles {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 20px;
+    }
+  h3 {
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 0;
+    width: auto;
+    padding: 5px 8px;
+    font-weight: 400;
+  }
+  h2 {
+    font-size: 50px;
+    font-weight: 200;
+    text-transform: none;
+    line-height: 1.1;
+  }
+  .b-description {
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 5px;
+  }
+  i.m-xl-badge {
+    width: 100px;
+    font-size: 100px;
+    color: rgba(255, 255, 255, 0.2);
+    margin: 30px 0 0 0;
+  }
+
+}
+
+
+
+
+
+
