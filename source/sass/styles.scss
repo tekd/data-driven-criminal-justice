@@ -2,5 +2,6 @@
 // used to manage sass dependencies by only importing the sass files that will be used in the site build
 // add any site-specific sass you want to use here using an @import
 @import '../../node_modules/govlab-styleguide/sass/styles'; // govlab-styleguide sass
+@import 'normalize';
 
 @import 'custom';
