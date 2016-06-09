@@ -11,6 +11,14 @@
     top: 0;
     z-index: 1;
     padding: 10px 20px 20px 20px;
+    .e-social-media .e-nav-item {
+      @media (max-width:520px) {
+        display: block;
+        padding: 0;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
   }
   
 .b-footer .e-content {
