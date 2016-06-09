@@ -11,6 +11,14 @@
     top: 0;
     z-index: 1;
     padding: 10px 20px 20px 20px;
+    .e-social-media .e-nav-item {
+      @media (max-width:520px) {
+        display: block;
+        padding: 0;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
   }
   
 .b-footer .e-content {
@@ -67,45 +75,61 @@
 #b-homepage {
   .b-top-section {
     background-size: cover;
-    height: 72vh;
+    height: 75vh;
     position: relative;
+    color: white;
+    .e-shade {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: linear-gradient($gray-10, $gray-80);
+    }
     .e-main-title {
-      @include breakpoint($desktop){
-        font-size: 60px;
-      }
-      @include breakpoint($mobile-only){
-        font-size: 50px;
-      }
+        @include breakpoint($desktop) {
+            font-size: 60px;
+            font-weight: 100;
+        }
+        @include breakpoint($mobile-only) {
+            font-size: 2.6rem;
+            font-weight: 400;
+        }
     }
     .e-tagline {
-      @include breakpoint($desktop){
-        font-size: 28px;
-      }
-      @include breakpoint($mobile-only){
-        font-size: 20px;
-      }
+        @include breakpoint($desktop) {
+            font-size: 30px;
+            font-weight: 100;
+        }
+        @include breakpoint($mobile-only) {
+            font-size: 1.25rem;
+            font-weight: 400;
+        }
     }
   }
   .e-titles {
     position: absolute;
+    margin: 0;
+    padding: 0;
     bottom: 100px;
     width: 100%;
     padding: 20px;
+    h3 {
+      text-transform: uppercase;
+      font-size: 24px;
+      margin: 0;
+      width: auto;
+      padding: 5px 8px;
+      font-weight: 300;
     }
-  h3 {
-    text-transform: uppercase;
-    font-size: 24px;
-    margin: 0;
-    width: auto;
-    padding: 5px 8px;
-    font-weight: 300;
   }
 }
 
 // SURVEYS
 .b-surveys-page{
   #download-button {
-    bottom: -127px;
+    bottom: -27px;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -121,10 +145,8 @@
     margin: 40px 0px;
     padding: 10px;
     .e-description-title {
-      // font-weight: 600;
       color: rgba($black, .4);
-      // margin-right: 30px;
-      line-height: .9;
+      line-height: 1.5;
       padding-left: 0;
       text-transform: uppercase;
           font-weight: 400;
@@ -137,8 +159,6 @@
       }
     }
     .e-description {
-      // line-height: 1.4;
-      // font-size: 18px;
       font-size: 1.2rem;
       font-weight: 300;
     }
