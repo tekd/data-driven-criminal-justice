@@ -1,33 +1,91 @@
 {% extends '_base.html' %}
 
 {% block main %}
-<h1>{{title}}</h1>
-<p>{{image}}</p>
-<p>{{date_start}}</p>
-<p>{{date_end}}</p>
-<p>{{qty_responses}}</p>
-<p>{{goal}}</p>
-<p>{{objectives}}</p>
-<p>{{key_findings}}</p>
-<p>{{link.survey}}</p>
-<p>{{download}}</p>
+<div class='b-surveys-page'>
+
+  <div class="b-top-section" style='background-image: url(./img/temp-backgrounds/{{image}})'>
+    <div class="row expanded">
+      <div class="large-10 column large-centered e-titles">
+        <div class="e-shade"></div>
+          <h1>{{title}}</h1>
+          <h3>{{goal}}</h3>
+          <div id="download-button">
+            <a href="#" class="b-button m-purple ">Download the Slides<i class="material-icons m-space">file_download</i></a>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="b-page-section survey-summary">
+
+    <div class="row">
+      <div class="large-3 columns">
+        <h3 class="e-description-title">Goal</h3>
+      </div>
+      <div class="large-8 columns end">
+        <p class="e-description">{{goal}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-3 columns">
+        <h3 class="e-description-title">Objectives</h3>
+      </div>
+      <div class="large-8 columns end">
+        <ul class='e-description'>
+          {% for objective in objectives %}
+          <li>{{objective}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-3 columns">
+        <h3 class="e-description-title">Key Findings</h3>
+      </div>
+      <div class="large-8 columns end">
+        <p class="e-description">{{key_findings}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-3 columns">
+        <h3 class="e-description-title">Dates</h3>
+      </div>
+      <div class="large-8 columns end">
+        <p class="e-description">{{date_start}} - {{date_end}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-3 columns">
+        <h3 class="e-description-title">Number of Responses</h3>
+      </div>
+      <div class="large-8 columns end">
+        <p class="e-description">{{qty_responses}}</p>
+      </div>
+    </div>
+  
+  </div>
+
+
+
+
+
+
+
+{# 
+  <h1>{{title}}</h1>
+  <p>{{image}}</p>
+  <p>{{date_start}}</p>
+  <p>{{date_end}}</p>
+  <p>{{qty_responses}}</p>
+  <p>{{goal}}</p>
+  <p>{{objectives}}</p>
+  <p>{{key_findings}}</p>
+  <p>{{link.survey}}</p>
+  <p>{{download}}</p> #}
+</div>
 {% endblock %}
 
-
----
-# surveys
-
-- title: The CJCC Survey
-  image: 
-  date_start: October 21, 2015
-  date_end: October 24, 2015
-  qty_responses: 34
-  goal: Sent to members of Criminal Justice Coordinating Councils (CJCCs) interested in accelerating justice system data sharing.
-  objectives:
-    - Understand the role of data-driven decision making in the criminal justice system today
-    - Map the availability of and access to data for reform
-    - Identify the barriers and impediments to using data
-  key_findings: Initial results from 34 respondents demonstrated a diverse array of data practices. Information is collected on paper and digitally. Information is collected on paper and digitally. In some cases, it is anonymized and, in other cases, simply stored security. There’s a significant diversity around data analytics as well. Some analyze the data within the agency, some outsource, and some do not perform data analytics at all. Some jurisdictions can use data to trace someone in the system; others cannot. Governance policies and mechanisms differ. In short, there is diversity of experience. In common is only the fact that almost no one posts open data for the public, including researchers, to study and analyze. The results were presented during the first Data-Driven Justice Workshop held at the White House on October 28th, 2015.
-  link:
-    survey: https://govlab.typeform.com/to/qPeday
-  downloads:
