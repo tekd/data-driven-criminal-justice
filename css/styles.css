@@ -7647,6 +7647,9 @@ textarea {
 
 .b-surveys-page .e-titles,
 #b-homepage .e-titles {
+  position: absolute;
+  margin: 0;
+  padding: 0;
   bottom: 100px;
   width: 100%;
   padding: 20px; }
@@ -7675,7 +7678,7 @@ textarea {
   padding: 10px; }
   .b-surveys-page .survey-summary .e-description-title {
     color: rgba(51, 51, 51, 0.4);
-    line-height: .9;
+    line-height: 1.5;
     padding-left: 0;
     text-transform: uppercase;
     font-weight: 400;
