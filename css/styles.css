@@ -7568,7 +7568,7 @@ textarea {
   /* 2 */ }
 
 .b-top-nav.m-transparent {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   width: 100%;
   position: absolute;
@@ -7597,6 +7597,20 @@ textarea {
       width: 25%;
       max-height: 300px; } }
 
+<<<<<<< HEAD
+=======
+#b-homepage .b-top-section {
+  background-image: url(/img/banners/ddcj-index.jpg); }
+  #b-homepage .b-top-section .e-shade {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)); }
+
+>>>>>>> db4bbbaee928985c21568173a3aa2cd1ead6b06a
 #b-homepage h2 {
   font-size: 50px;
   font-weight: 200;
@@ -7620,15 +7634,6 @@ textarea {
   height: 75vh;
   position: relative;
   color: white; }
-  .b-surveys-page .b-top-section .e-shade,
-  #b-homepage .b-top-section .e-shade {
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.8)); }
   .b-surveys-page .b-top-section .e-main-title,
   #b-homepage .b-top-section .e-main-title {
     font-size: 2.6rem;
@@ -7655,7 +7660,7 @@ textarea {
   padding: 0;
   bottom: 20px;
   width: 100%;
-  padding: 20px; }
+  padding: 30px; }
   .b-surveys-page .e-titles h3,
   #b-homepage .e-titles h3 {
     text-transform: uppercase;
