@@ -7575,6 +7575,12 @@ textarea {
   top: 0;
   z-index: 1;
   padding: 10px 20px 20px 20px; }
+  @media (max-width: 520px) {
+    .b-top-nav.m-transparent .e-social-media .e-nav-item {
+      display: block;
+      padding: 0;
+      text-align: center;
+      margin-top: 5px; } }
 
 .b-footer .e-content h4 {
   text-align: center; }
