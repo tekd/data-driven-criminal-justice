@@ -6,3 +6,27 @@
 
 @import 'custom';
 @import 'small-screens';
+
+.b-main-menu {
+
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+      width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px inherit; 
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: inherit; 
+      -webkit-box-shadow: inset 0 0 6px $gray-15; 
+  }
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: $gray-15; 
+  }
+
+}
