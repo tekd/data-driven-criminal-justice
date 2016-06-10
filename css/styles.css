@@ -7797,3 +7797,19 @@ textarea {
     .b-surveys-page .survey-summary .e-description {
       font-size: 1rem;
       font-weight: 300; } }
+
+.b-main-menu {
+  overflow-x: auto; }
+  .b-main-menu::-webkit-scrollbar {
+    width: 8px; }
+  .b-main-menu::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px inherit;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; }
+  .b-main-menu::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: inherit;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15); }
+  .b-main-menu::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.15); }
