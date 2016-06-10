@@ -1,0 +1,151 @@
+
+// // VERY SMALL SCREENS
+
+@media (max-width:500px){
+  .b-top-nav.m-transparent {
+    .e-social-media .e-nav-item {
+        display: none;
+      }
+    }
+}
+
+// // VERTICAL
+@media (max-width:411px){
+  
+//   // BASE
+  .b-top-nav.m-transparent {
+    .e-social-media .e-nav-item {
+        display: none;
+      }
+    }
+  .b-main-menu a{
+    font-size: 1rem;
+    text-align: left;
+  }
+    
+
+  // INDEX
+  #b-homepage {
+    h2 {
+      font-size: 2rem;
+      font-weight: 200;
+      text-transform: none;
+      line-height: 1.1;
+    }
+    .b-description {
+      font-weight: 300;
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+    i.m-xl-badge {
+      width: 50px;
+      font-size: 50px;
+    }
+
+  }
+
+  hgroup {
+    padding: 0;
+  }
+  // INDEX AND SURVEYS
+  .b-surveys-page,
+  #b-homepage {
+    .b-top-section {
+      height: 100vh;
+      .e-main-title {
+        font-size: 2rem;
+        font-weight: 400;
+      }
+      .e-tagline {
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  // SURVEYS
+  .b-surveys-page{
+    .survey-summary {
+      margin: 40px 0px;
+      padding: 10px;
+      .e-description-title {
+        font-size: 1.2rem;
+        text-align: left;
+      }
+      .e-description {
+        font-size: 1rem;
+        font-weight: 300;
+      }
+    }
+  }
+}
+// HORIZONTAL
+@media (max-height:500px){
+  //   // BASE
+    .b-top-nav.m-transparent {
+      .e-social-media .e-nav-item {
+          // display: none;
+        }
+      }
+    .b-main-menu a{
+      font-size: 1rem;
+      text-align: left;
+    }
+      
+
+    // INDEX
+    #b-homepage {
+      h2 {
+        font-size: 2rem;
+        font-weight: 200;
+        text-transform: none;
+        line-height: 1.1;
+      }
+      .b-description {
+        font-weight: 300;
+        font-size: 1rem;
+        margin-top: 5px;
+      }
+      i.m-xl-badge {
+        width: 50px;
+        font-size: 50px;
+      }
+
+    }
+
+    hgroup {
+      padding: 0;
+    }
+    // INDEX AND SURVEYS
+    .b-surveys-page,
+    #b-homepage {
+      .b-top-section {
+        height: 100vh;
+        .e-main-title {
+          font-size: 2rem;
+          font-weight: 400;
+        }
+        .e-tagline {
+          font-size: 1.1rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+    // SURVEYS
+    .b-surveys-page{
+      .survey-summary {
+        margin: 40px 0px;
+        padding: 10px;
+        .e-description-title {
+          font-size: 1.2rem;
+          text-align: left;
+        }
+        .e-description {
+          font-size: 1rem;
+          font-weight: 300;
+        }
+      }
+    }
+
+}

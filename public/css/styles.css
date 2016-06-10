@@ -7713,3 +7713,87 @@ textarea {
   .b-surveys-page .survey-summary .e-description {
     font-size: 1.2rem;
     font-weight: 300; }
+
+@media (max-width: 500px) {
+  .b-top-nav.m-transparent .e-social-media .e-nav-item {
+    display: none; } }
+
+@media (max-width: 411px) {
+  .b-top-nav.m-transparent .e-social-media .e-nav-item {
+    display: none; }
+  .b-main-menu a {
+    font-size: 1rem;
+    text-align: left; }
+  #b-homepage h2 {
+    font-size: 2rem;
+    font-weight: 200;
+    text-transform: none;
+    line-height: 1.1; }
+  #b-homepage .b-description {
+    font-weight: 300;
+    font-size: 1rem;
+    margin-top: 5px; }
+  #b-homepage i.m-xl-badge {
+    width: 50px;
+    font-size: 50px; }
+  hgroup {
+    padding: 0; }
+  .b-surveys-page .b-top-section,
+  #b-homepage .b-top-section {
+    height: 100vh; }
+    .b-surveys-page .b-top-section .e-main-title,
+    #b-homepage .b-top-section .e-main-title {
+      font-size: 2rem;
+      font-weight: 400; }
+    .b-surveys-page .b-top-section .e-tagline,
+    #b-homepage .b-top-section .e-tagline {
+      font-size: 1.1rem;
+      font-weight: 400; }
+  .b-surveys-page .survey-summary {
+    margin: 40px 0px;
+    padding: 10px; }
+    .b-surveys-page .survey-summary .e-description-title {
+      font-size: 1.2rem;
+      text-align: left; }
+    .b-surveys-page .survey-summary .e-description {
+      font-size: 1rem;
+      font-weight: 300; } }
+
+@media (max-height: 500px) {
+  .b-main-menu a {
+    font-size: 1rem;
+    text-align: left; }
+  #b-homepage h2 {
+    font-size: 2rem;
+    font-weight: 200;
+    text-transform: none;
+    line-height: 1.1; }
+  #b-homepage .b-description {
+    font-weight: 300;
+    font-size: 1rem;
+    margin-top: 5px; }
+  #b-homepage i.m-xl-badge {
+    width: 50px;
+    font-size: 50px; }
+  hgroup {
+    padding: 0; }
+  .b-surveys-page .b-top-section,
+  #b-homepage .b-top-section {
+    height: 100vh; }
+    .b-surveys-page .b-top-section .e-main-title,
+    #b-homepage .b-top-section .e-main-title {
+      font-size: 2rem;
+      font-weight: 400; }
+    .b-surveys-page .b-top-section .e-tagline,
+    #b-homepage .b-top-section .e-tagline {
+      font-size: 1.1rem;
+      font-weight: 400; }
+  .b-surveys-page .survey-summary {
+    margin: 40px 0px;
+    padding: 10px; }
+    .b-surveys-page .survey-summary .e-description-title {
+      font-size: 1.2rem;
+      text-align: left; }
+    .b-surveys-page .survey-summary .e-description {
+      font-size: 1rem;
+      font-weight: 300; } }
